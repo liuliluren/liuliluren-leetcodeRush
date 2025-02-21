@@ -944,9 +944,9 @@ class Solution {
 >
 > - ```
 >   而对于每次找第k小的数时，先找到两数组的第[k/2-1]的数，将这两个数进行比大小，小的一方的左侧的数全部都可以去掉，也就是去掉 0 ~ k/2-1共计k/2个数；
->                                                                                                                             
+>                                                                                                                               
 >   然后下一步就是重新进行遍历，现在需要找的是第k-k/2=k/2小的数了；
->                                                                                                                             
+>                                                                                                                               
 >   通过这样每次都去掉[0]......[k/2-1]的方式，逐步的减少k的值，最后逼近到临界值，就可以确认k了。
 >   ```
 
@@ -998,7 +998,7 @@ class Solution {
 >
 >   1. ```
 >      从字符串的最右边倒序遍历所有的字符，当遇到首个遍历的对象与当前的对象之间的所有字符能构成一个回文串的时候退出遍历；
->                                                                                                                                                                                                                                                                                                                       
+>                                                                                                                                                                                                                                                                                                                            
 >      记录下得到回文字符串的时候，记录长度，与maxLength进行比较，当超过当前的maxLenght的时候取缔maxLength，并记录起点与终点位置；
 >      ```
 >
@@ -1006,7 +1006,7 @@ class Solution {
 >   之前还有过一种思路：
 >   就是构造一个类似栈的结构，这个栈的可以操作栈顶和次栈顶；
 >   每次检查字符串的数据的时候，都取出字符串的该数据，将其与栈顶、次栈顶的数据进行比较，如果相同，则代表可以构成回文字符串。
->                                                                                                                             
+>                                                                                                                               
 >   但是这其实存在一个问题，并不是下一个立马出现的相同的字符能使其构成最大回文字符串。
 >   比如ababa，在这个思路中，会将第二个a与第一个a进行配对，构成回文字符串，然而这并不是最长回文字符串的构造方式，应该取第一个a和第三个a进行配对组成会问字符串。
 >   ```
@@ -1080,7 +1080,7 @@ class Solution {
 > 3. ```
 >    另一个难点就是，如果使得字符串与其子字符串产生联系呢？
 >    答案是通过数组记录的方式。
->                                                                                                                                                                                           
+>                                                                                                                                                                                              
 >    构建一个二维的数组，boolean[][] dp == new boolean[len][len];
 >    存储是否为字符串的判断。
 >    比如字符s的第i到j的字符串是否为回文字符串，可以记录dp[i][j] = true;
@@ -1214,26 +1214,26 @@ class Solution {
 >
 > 1. ```
 >    首先是对lenght=1，直接返回原字符串；
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    这可以进一步，当length>numRows的时候，也可以直接返回原字符串。
 >    ```
 >
 > 2. ```
 >    然后就是找数组的列的时候，并没有像自己思考的那样简单的将列设置为length/2，而是通过数学的推导，先找到周期，然后找到每个周期使用的字符的数量，最后算出数组需用的列数。
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    其中，在求周期的这个地方有一个内容：
 >    比如当要求⌈n/2⌉的时候，也就是不满的按照满处理，对于n=15的时候，n/2需要等于8，而不是7，这个时候在代码中可以使用new ArrayList
 >    int result = (n + 1) / 2，这样就能满足条件了。
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    同样的，对于不只是2的底数t的时候，可以遵循下面的式子：
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    int result = (n + t - 1)/t;
 >    这样，只要result除完t后还有任何余数都会被算进成为一个新的周期，也就是所谓的⌈n/t⌉的效果实现了。
 >    ```
 >
 > 3. ```
 >    另外，数在下移还是右上移的判断方式，是基于周期的判断，每个周期内的字符的数量是r + r - 2，也就是每个周期内前r个数都是下移，之后的数都是右上移。
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    而在自己的实现中，是通过创建了一个移动标识，当标识为true的时候下移动，为false的时候右上移动，标识的判别方式通过i的值来改变。每次当i触碰到行的初始位置或者是底部位置都会引起移动表示的改变。
 >    ```
 
@@ -1339,15 +1339,15 @@ class Solution {
 >
 > 1. ```
 >    基本思路一样，唯一的区别在于没有使用for进行循环，而是使用了
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    			dfs(candidates, target, ans, combine, idx + 1);
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    来对candidates的下一个数进行判断的操作。【下一个数的判定是idx + 1】
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    而
 >                dfs(candidates, target - candidates[idx], ans, combine, idx);
 >    是对当前的candidates的候选数进行继续判断。
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    下面这个图很好的解释了官方题解的运作方式。
 >    ```
 >
@@ -1537,7 +1537,7 @@ class Solution {
 > 1. ```
 >    首先是题目中，包含的结果，可以允许字符集的不同排列顺序作为计数；
 >    比如[1,2,1]和[1,1,2]就是两种结果。当然还有[2,1,1]也是一种结果。
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    这样的话，会导致什么问题呢？
 >    按照之前的深度优先的实现，一般都是通过一个“跳过”深度优先搜索：
 >            dfs(targetNum, presentNum+1);
@@ -1552,14 +1552,14 @@ class Solution {
 >    而在以前的类似实现中，都是写的是：
 >                dfs(targetNum-presentNum, findList, presentNum+1);
 >    也就是当前的字符处理完之后，从下一个字符开始进行深度优先搜索。
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    乍一看，本体的实现方式可能会导致更多的时间花费，但是这也是本体的问题所在，如果采用的是下面的这种实现，那么遍历便存在了“顺序”，也就是只会有[3,2,1],而不会出现[3,1,2]这样的结果。
 >    因此，每次的深度优先搜索，都需要从头开始遍历，这样就不会导致“顺序”的存在。
 >    ```
 >
 > 2. ```
 >    本题需要添加“备忘录”这一数据结构，不然在深度搜索的时候会存在大量的重复。
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    需要用一个memo来记录每个target的count值：
 >            if (targetNum - candidates[presentNum] >= 0){
 >                int temp = count;
@@ -1570,7 +1570,7 @@ class Solution {
 >                memo[targetNum - candidates[presentNum]] = count - temp;
 >    这段代码中，每当前面的dfs结束搜索，那么此时count的增加值就是其搜索的值的count值；
 >    其搜索的是targetNum - candidates[presentNum]，增加的值也就是count - temp；因此记录为如上所示。
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    而在每次搜索开启时候，会对memo值进行检查，也就是
 >            if (memo[targetNum] != -1){
 >                count += memo[targetNum];
@@ -1606,25 +1606,25 @@ class Solution {
 >
 > 1. ```
 >    如果存在一种排列，其中的元素之和等于 i，则该排列的最后一个元素一定是数组 nums 中的一个元素。
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    那么也就是说，每一个target的值，都是可以通过先前的记录来计算的。
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    计算方法为，遍历一次候选值，也就是nums，而target-nums[i]的值+num[i]的值必定等于target。
 >    ```
 >
 > 2. ```
 >    因此，构造一个dp数组，用来记录从0到target的所有的数的count值。
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    比如对于nums = [1,2,3]，已经得到了target = 1的count值为1，target=2的count值为2；
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    记录dp[1] = 1,dp [2] = 2
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    那么target = 3的值的计算方式为：
 >    遍历一遍所有的候选数，从nums[0] ~ num[2]，也就是1，2，3；
 >    首先对于1，有1<=target，所以dp[3] += dp[target - 1];也就是+1
 >    对于2，有2<=target，所以dp[3] += dp[target - 2];也就是+2
 >    对于3，有3<=target，所以dp[3] += dp[target - 3];也就是+1
->                                                                                                                                                                                        
+>                                                                                                                                                                                           
 >    因此dp[3] = 4；
 >    ```
 
@@ -1898,10 +1898,10 @@ class SnapshotArray {
 > 1. ```
 >    对于每一次快照，新构建一个Map：
 >        Map<Integer, Integer> hashtable = new HashMap<>();
->                                                                                                                                                                                         
+>                                                                                                                                                                                            
 >    每当进行一次set，执行：
 >            hashtable.put(index, val);
->                                                                                                                                                                                             
+>                                                                                                                                                                                                
 >    对于每一次拍摄快照snap，将当前的hashtable存入构建的mapList
 >       		List<Map<Integer, Integer>> mapList = new ArrayList<>();
 >            mapList.add(new HashMap<>(hashtable));
@@ -1910,13 +1910,13 @@ class SnapshotArray {
 > 2. ```
 >    存在的问题一：
 >    不断的拍摄快照，每次快照之前并没有执行set，这意味着快照的内容都是重复的。
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    这个时候就不需要把每次的快照中的hashtable存入mapList中。
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    这样可能会导致序号问题，也就是怎么找那些快照呢？
 >    所以需要构建一个snapIdMap，用来对应snapId在mapList中的位置。
 >        	Map<Integer, Integer> snapIdMap = new HashMap<>();
->        	                                                                                                                                                                                 
+>        	                                                                                                                                                                                    
 >    核心代码为：
 >            if (change){
 >                mapList.add(new HashMap<>(hashtable));
@@ -1977,18 +1977,18 @@ class SnapshotArray {
 >
 > 1. ```
 >    个人在实现的时候，是对于每一次的快照来考虑的；
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    而官方题解中，是构建了一个长度为length的数组。竖向的存储每次快照的内容。
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    也就是每一次set的时候，找到其进行修改的位置，然后在这个位置中，记录下最新的这一次修改。
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    举个例子：
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    对于第3次快照，进行了set(2,5);
 >    在位置为2的地方插入了数据5。
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    在自己的实现中，会对进行到第三次遍历的时候，针对上一次的hashMap的修改，修改其对应位置的内容。然后在同步。
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    而在这个实现中，是优先找到其修改的位置，也就是2，在位于2的这处的data，增加一个[3,5]的数据，意味着：
 >    			“在位置为2的地方，在第三次的快照中，其值变成了5。”
 >    ```
@@ -2143,7 +2143,7 @@ class Solution {
 >   由于给出的测试数据全是正数；
 >   因此需要确认符合结果的数组的长度；
 >   构建一个数组，各自存放路径上的正数合与负数合，以及一个2的次方数组；
->                                                                                                                         
+>                                                                                                                           
 >   比如对于int n = 53;
 >   构建的正数合数组：[1, 0, 5, 0, 21, 0, 85]
 >   构建的负数合数组：[0, -2, 0, -10, 0, -42, 0]
@@ -2226,17 +2226,17 @@ class Solution {
 >
 > 1. ```
 >    a & b;
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    在Java中，&是一个位运算符，表示按位与操作。它将两个操作数的对应位进行逻辑与操作，如果两个位都为1，则结果位为1，否则为0。
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    1: 0001
 >    2: 0010
 >    因此1 & 2: 0000，也就是1 & 2 = 0；
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    1: 0001
 >    3: 0011
 >    因此1 & 3： 0001，也就是1 & 3 = 1；
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    因此&的作用往往是用来判断奇数偶数；
 >    形式往往是
 >                if ((n & 1) != 0) {
@@ -2246,7 +2246,7 @@ class Solution {
 >
 > 2. ```
 >    n >>= 1;
->                                                                                                                                                                                     
+>                                                                                                                                                                                        
 >    这句话的作用相当于是/2，但是其处理的速度比直接使用a /= 2的效果会快一点。
 >    比如对于n = 1010，执行            n >>= 1;之后，其值变成了0101,
 >    也就是从10，变成了5。
@@ -3030,10 +3030,10 @@ class Solution {
 >
 > 2. ```
 >    将处理分为两种情况，判断标准是：list的长度是否>=candidates*2；
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    （1）：如果list.size() < candidates*2；那么直接将list内的内容全部进行排序，然后从小到大，将前k个数的和直接返回就是结果了。
 >    		为什么会有这样一个效果呢？这也是这个题比较容易难理解的地方，因为一旦list.size() < candidates*2；也就是前后的candidates加起来的范围已经覆盖了list的全部内容。而题目所求的是前后candidates中的最小的，在两者已经覆盖了所有的list的情况下，直接找最小的值也就是每次的目的值。
->    		                                                                                                                                                                           
+>    		                                                                                                                                                                              
 >    （2）：如果list.size() 并没有符合上述条件。
 >    		那么构造三个新的list，分别是headList与tailList；
 >    		headList记录的是list的前candidates个数；
@@ -3055,7 +3055,7 @@ class Solution {
 >
 > 4. ```
 >    可以优化的有哪些地方？
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    （1）时间复杂度：
 >    	第3步中，将headList与tailList合并，这里是两个已经排序的list重新排序，有办法提升合并排序的速度。
 >    ```
@@ -3114,7 +3114,7 @@ class Solution {
 >    		//如果相等的话，就通过a[1] - b[1]进行升序排放。
 >    		//[0]内的元素代表的是cost的值，[1]内的元素代表的是序号；
 >    		//依据题目中的理解，也就是首先根据值的判断先后顺序，如果无法根据值判断优先顺序【也就是值相同】，那就根据序号来进行判断先后顺序。
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    		if (left + 1 < right) {
 >                for (int i = 0; i <= left; ++i) {
 >                    //将前边的元素加入小根堆中。
@@ -3194,17 +3194,17 @@ class Solution {
 > 1. ```
 >    想了比较久也是想到了在头尾各放置一个指针，然后往内移动。
 >    但是在向内移动的时候，移动头还是尾并没有什么思路。
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    考虑过比较移动头和尾各自移动后的盛水量的变化，但是并不觉得是个合理的方式。
 >    ```
 >
 > 2. ```
 >    后来看了看提示，说是移动头尾中，值较小的一方。
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    好像有点道理，但是并不能理解其中的数学关系。
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    不过也没啥好的思路，索性编写一次看看结果。
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    没想到就过了。
 >    ```
 >
@@ -3363,7 +3363,7 @@ class Solution {
 >
 > 1. ```
 >    基本的思路是三重循环，但是需要搭配最重要的排序。
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    最开始的时候就将序列进行一次排序。
 >    ```
 >
@@ -3373,11 +3373,11 @@ class Solution {
 >    		       ......
 >            }
 >    在遍历中，目的是寻找合为target = -nums[first]的nums[second]与nums[third]。
->                                                                                                                                                                                       
+>                                                                                                                                                                                          
 >    在每次循环中，设置两个指针，分别是second与third;
 >    其中second = first + 1;
 >    third = nums.length - 1;
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    然后采取的方法是夹逼，然first与third不断的收缩，最后找到目的值。
 >    ```
 >
@@ -3386,7 +3386,7 @@ class Solution {
 >           if (first > 0 && nums[first] == nums[first - 1]) {
 >                    continue;
 >           }
->                                                                                                                                                                                      
+>                                                                                                                                                                                         
 >           if (second > first + 1 && nums[second] == nums[second - 1]) {
 >                    continue;
 >           }
@@ -3429,13 +3429,13 @@ class Solution {
 >
 > 1. ```java
 >    if (x + nums[i + 1] + nums[i + 2] > 0) break; // 优化一
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    if (x + nums[n - 2] + nums[n - 1] < 0) continue; // 优化二
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    //这两个优化的效果非常好。
 >    //因为nums已经进行了排序，对于下面这样一个队列：
 >    //比如当序列进行到999,1000，1001......100000......这种部分的时候，实际上已经完全没必要继续找second与third了，因为后面都只会增加，其和只会越来越大，距离0越来越远，因此可以直接break；
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    //同理的对于优化二，当序列是下面这种
 >    //-99999，-99998，-1，0，1，2，3，4，5，6，7....100的时候
 >    //将-99999加上末尾最大的两个值也还是小于0，前面任意的遍历也是没必要的，因此可以直接continue，判断下一个元素。
@@ -3721,7 +3721,7 @@ class Solution {
 >
 > 1. ```
 >    最开始，且错误的思路是，使用双指针，根据每次新加入值后的大小判断，如果超出，则下次舍弃head处的指针的数【head++】，如果小于，则将tail处的指针++。
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    后来发现数组中的数不只是正数，还有可能有负数，这意味着新加入数也可能让整体的和变小，这个思路就行不通了。
 >    ```
 >
@@ -3771,9 +3771,9 @@ class Solution {
 >
 > 3. ```
 >    思考了一下这个实现的算法复杂度，时间复杂度O（nlogn），但是还是用了两层for。既然都用了两层for了，为什么还需要构建这样一个结构呢。
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    然后就索性去掉了这些存储的结构，直接判断是否满足条件，于是有了个人题解中的代码。
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    个人题解中，相当于是对nums的每个数往后进行一次累积和，如果存在合理的累积和，则使得最后的计数++。
 >    ```
 
@@ -3877,10 +3877,10 @@ class Solution {
 >
 > 1. ```java
 >    与和为K的子数组——560比较类似。
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    第一次思考的时候，核心思路是：在累计和的序列中找到正向差值最大的两个数，并且需要以后边的数减去前边的数的形式。
 >    【白话就是在sumList中，用一个后边的数减去一个前边的数，值最接近+∞这个值就是结果。】
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    最开始的时候，通过构造一个sumList，存储所有的前边的和值，每次计算到当前的和值currentSum之后，找到位于其前边的sunList中的最小的值，然后计算currentSum-那个最小的值，然后用result来记录这个减值最大的数。
 >    ```
 >
@@ -3912,7 +3912,7 @@ class Solution {
 > 1. ```java
 >    //核心在于
 >    pre = Math.max(pre + x, x);
->                                                                                                                                                                               
+>                                                                                                                                                                                  
 >    //如何理解？
 >    //如果前边与自己累加后还不如自己本身大，那就把前边的都扔掉，从此自己本身重新开始累加。
 >    ```
@@ -4093,7 +4093,7 @@ class Solution {
 >            Iterator<Map.Entry<Integer, int[]>> iterator = 
 >                    map.entrySet().iterator();
 >            Map.Entry<Integer, int[]> entryCurrent = null;
->                                                                                                                                                                            
+>                                                                                                                                                                               
 >            while (iterator.hasNext()) {
 >                //下一个位置的指向器
 >                Map.Entry<Integer, int[]> entryNext = iterator.next();
@@ -9878,5 +9878,226 @@ class Solution {
 
 > 核心思路
 >
-> 从设计的逻辑来看和自己的代码差不多，但是这个代码更优美，自己的代码更容易阅读理解。
+> 从设计的逻辑来看和自己的代码差不多，这个代码更优美，自己的代码更容易阅读理解。
+
+## 70	2025-02-21
+
+### （1）划分字母区间——763
+
+**个人题解**：
+
+```java
+class Solution {
+    public List<Integer> partitionLabels(String s) {
+        int length = s.length();
+        int left = 0;
+        int right = length - 1;
+        List<Integer> result = new ArrayList<>();
+        Set <Character> currSet = new HashSet<>();
+
+        while (left < length) {
+            int currMax = left;
+
+            // 从最右边开始往左遍历，直到找到与left相同的为止。
+            for (right = length - 1; right > left; right--) {
+                if (s.charAt(left) == s.charAt(right)) {
+                    currMax = right;
+                    break;
+                }
+            }
+
+            // 找到与最优先的left时，将left ~ currMax之间的数全部加入set中
+            for (int i = left; i <= currMax; i++){
+                currSet.add(s.charAt(i));
+            }
+
+            // 之后再从后往前遍历，确认本次Set的最大边界。
+            right = length - 1;
+            while (right != currMax){
+                // 如果存在相同的，那么就把最大边界更新，在重新循环。
+                if (currSet.contains(s.charAt(right))) {
+                    for (int i = currMax + 1; i <= right ; i++){
+                        currSet.add(s.charAt(i));
+                    }
+                    currMax = right;
+                    right = length;
+                }
+                right --;
+            }
+
+            // 确认了本次set 的边界之后，清除set，重新开始一次循环。
+            result.add(currMax + 1);
+
+            currSet.clear();
+            left = currMax + 1;
+        }
+        for (int i = result.size() - 1; i > 0; i--){
+            result.set(i, result.get(i) - result.get(i - 1));
+        }
+        return result;
+    }
+}
+```
+
+> 核心思路
+>
+> 思路比较直观，看代码理解吧，不过效率较差。
+
+**官方题解**：
+
+```java
+class Solution {
+    public List<Integer> partitionLabels(String s) {
+        int[] last = new int[26];
+        int length = s.length();
+        for (int i = 0; i < length; i++) {
+            last[s.charAt(i) - 'a'] = i;
+        }
+        List<Integer> partition = new ArrayList<Integer>();
+        int start = 0, end = 0;
+        for (int i = 0; i < length; i++) {
+            end = Math.max(end, last[s.charAt(i) - 'a']);
+            if (i == end) {
+                partition.add(end - start + 1);
+                start = end + 1;
+            }
+        }
+        return partition;
+    }
+}
+```
+
+> 核心思路
+>
+> 官方这个题解优美太多了。
+>
+> - 最核心的一个思路就是
+>
+>   第一次遍历一遍数组，计算出其中每个字符出现的最后位置。
+>
+> - 第二个for循环也比较精妙
+>
+>   能确保在一遍循环之内找到当前的字符串的末尾同时不需要引入Set。
+
+### （2）打家劫舍——198
+
+**个人题解**：
+
+```java
+超时
+```
+
+> 核心思路
+>
+> 用了dp的思想，但是超时：
+>
+> ```java
+> class Solution {
+>     public int rob(int[] nums) {
+>         return rob(nums, 0);
+>     }
+>     public int rob(int[] nums, int curr) {
+>         if (curr == nums.length ){
+>             return 0;
+>         }
+>         if (curr == nums.length - 1){
+>             return nums[curr];
+>         }
+>         return Math.max(rob(nums, curr + 2) + nums[curr], rob(nums, curr + 1));
+>     }
+> }
+> ```
+>
+> 确实这会导致更多的没必要的计算。
+>
+> `Math.max(rob(nums, curr + 2) + nums[curr], rob(nums, curr + 1))`
+>
+> 主要是这部分内部的rob实际上进行了多次的重复计算，需要使用数组来减少计算量。
+>
+> 在知道了该使用数组来记录这个额外的重复计算的之后，实现了以下代码，虽然效率达到了需求，但是非常的不优美：
+>
+> ```java
+> class Solution {
+>     int [] count;
+>     int length;
+>     public int rob(int[] nums) {
+>         count = new int [nums.length];
+>         length = nums.length;
+>         Arrays.fill(count, -1);
+>         count[length - 1] = nums[length - 1];
+>         int res = rob(nums, 0);
+>         return res;
+>     }
+>     public int rob(int[] nums, int curr) {
+>         if (count[curr] != -1){
+>             return count[curr];
+>         }
+> 
+>         if (curr == length - 2){
+>             count[length - 2] = Math.max(nums[length - 1], nums[length - 2]);
+>             return count[length - 2];
+>         }
+> 
+>         count[curr] = Math.max(nums[curr] + rob(nums, curr + 2), rob(nums, curr + 1));
+> 
+>         return count[curr];
+>     }
+> }
+> ```
+
+**官方题解**：
+
+```java
+class Solution {
+    public int rob(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int length = nums.length;
+        if (length == 1) {
+            return nums[0];
+        }
+        int first = nums[0], second = Math.max(nums[0], nums[1]);
+        for (int i = 2; i < length; i++) {
+            int temp = second;
+            second = Math.max(first + nums[i], second);
+            first = temp;
+        }
+        return second;
+    }
+}
+```
+
+> 核心思路
+>
+> 自己的代码丑陋之处在于，自己的想法是从后往前加资源，但是自己的curr是从0往length方向进行的。
+>
+> 官方的代码就是两个都是同方向的。就没有那么丑陋。
+>
+> 自己整理了一下思路后完成的下部分代码：
+>
+> ```java
+> class Solution {
+>     public int rob(int[] nums) {
+>         int length = nums.length;
+>         if (length == 0){
+>             return 0;
+>         }
+>         if (length == 1){
+>             return nums[0];
+>         }
+>         int aheadOfAhead = 0;
+>         int ahead = nums[0];
+> 
+>         for (int i = 1; i < length; i++){
+>             int maxCurr = Math.max(ahead, aheadOfAhead + nums[i]);
+>             aheadOfAhead = ahead;
+>             ahead = maxCurr;
+>         }
+>         return ahead;
+>     }
+> }
+> ```
+
+
 
