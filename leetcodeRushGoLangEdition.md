@@ -439,9 +439,151 @@ func maxSlidingWindow(nums []int, k int) []int {
 >
 > 根据每次移除的数与新增加的数与当前记录的最大值的比较，去决定计算方式
 
-**官方题解**：
+## 6	2025-05-04
+
+### （1）76——最小覆盖子串
+
+**个人题解**：
 
 ```go
 
 ```
+
+> 核心思路
+>
+> 想到一种比较复杂的实现方式。
+>
+> 鉴于字符的类型是有范围的。
+>
+> 因此可以构建一个map，根据26种类型去构建value
+>
+> 找到t字符串中所包含的所有的字符类型。然后根据这些类型去划分满足t的字符的范围。
+>
+> 如：
+>
+> ```go
+> target := map[int][]string{}
+> // target是一个26行，未知列的map
+> // 一个示例：
+> target[a] = {{1,2}, {2,6}, {6,12}}
+> target[b] = {{1,3}, {3,8}, {8,11}}
+> target[c] = {{2,5}, {5,9}, {9,11}}
+> target[d] = {}
+> target[e] = {{1,6}}
+> target[f] = {{1,1}, {3,3},{7,7}}
+> ...
+> target[z] = {{5,6},{6,8}}
+> ```
+>
+> 最后需要输出一个最小的连续区间，这个区间需要满足以下的要求：
+> 满足map中的所有value组中，至少每组中有至少一个value的区间在输出的区间范围之内。【如果为空的话不限制，即当前分组不对最终输出的区间提出限制】
+>
+> 那么如果求target的map呢？
+>
+> 假设s是`asdasdasdasd`，t是`aa`，那么针对t所构建的`target[a]`就是`{{0,3},{3,6},{6,9}}`。
+>
+> 代表`a`所对应的value组，至少需要这几个区间之一就能满足t中对a字符锚定区间的需求。
+
+**官方题解**：
+
+```go
+func minWindow(s string, t string) string {
+    ori, cnt := map[byte]int{}, map[byte]int{}
+    for i := 0; i < len(t); i++ {
+        ori[t[i]]++
+    }
+
+    sLen := len(s)
+    len := math.MaxInt32
+    ansL, ansR := -1, -1
+
+    check := func() bool {
+        for k, v := range ori {
+            if cnt[k] < v {
+                return false
+            }
+        }
+        return true
+    }
+    for l, r := 0, 0; r < sLen; r++ {
+        if r < sLen && ori[s[r]] > 0 {
+            cnt[s[r]]++
+        }
+        for check() && l <= r {
+            if (r - l + 1 < len) {
+                len = r - l + 1
+                ansL, ansR = l, l + len
+            }
+            if _, ok := ori[s[l]]; ok {
+                cnt[s[l]] -= 1
+            }
+            l++
+        }
+    }
+    if ansL == -1 {
+        return ""
+    }
+    return s[ansL:ansR]
+}
+```
+
+> 核心思路
+>
+> 构造一个滑动窗口如下所示处理。
+>
+> ![fig1](https://gitee.com/hanhandehanpi/cloudimage/raw/master/76_fig1.gif)
+>
+> 个人理解后编写的代码：
+>
+> ```go
+> func minWindow(s string, t string) string {
+> 	l := 0
+> 	r := 0
+> 	sLen := len(s)
+> 	minLen := math.MaxInt32
+> 	ansL, ansR := -1, -1
+> 	// if sLen < len(t) {
+> 	// 	return ""
+> 	// }
+> 
+> 	target, cnt := map[byte]int{}, map[byte]int{}
+> 	check := func() bool {
+> 		for key, v := range target {
+> 			if cnt[key] < v {
+> 				return false
+> 			}
+> 		}
+> 		return true
+> 	}
+> 
+> 	for i := range t {
+> 		target[t[i]]++
+> 	}
+> 
+> 	for r < sLen {
+> 		if target[s[r]] > 0 {
+> 			cnt[s[r]]++
+> 		}
+> 		for check() && l <= r {
+> 			if r-l+1 < minLen {
+> 				minLen = r - l + 1
+> 				ansL, ansR = l, r+1
+> 			}
+> 			if target[s[l]] > 0 {
+> 				cnt[s[l]]--
+> 			}
+> 			l++
+> 		}
+> 		r++
+> 	}
+> 	if ansL == -1 {
+> 		return ""
+> 	}
+> 	return s[ansL:ansR]
+> }
+> ```
+
+
+
+
 
