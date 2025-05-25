@@ -583,7 +583,87 @@ func minWindow(s string, t string) string {
 > }
 > ```
 
+## 7	2025-05-25
 
+### （1）53——最大子数组和
 
+**个人题解**：
 
+```go
+func maxSubArray(nums []int) int {
+	preMinSum := 0
+	preSum := 0
+	res := -1 << 31
+	for _, v := range nums {
+		preSum += v
+		res = max(res, preSum-preMinSum)
+		preMinSum = min(preMinSum, preSum)
+	}
+	return res
+}
+```
 
+> 核心思路
+>
+> 记录此前和值中的最小和值。每次计算总和值后，比较当前和值与记录的此前最小和值之间是否为差值最大的一次。将此作为结果。
+
+**官方题解——动态规划**：
+
+```go
+func maxSubArray(nums []int) int {
+    max := nums[0]
+    for i := 1; i < len(nums); i++ {
+        if nums[i] + nums[i-1] > nums[i] {
+            nums[i] += nums[i-1]
+        }
+        if nums[i] > max {
+            max = nums[i]
+        }
+    }
+    return max
+}
+```
+
+> 核心思路
+>
+> 将nums[i]理解为当前i位置处的最大和值。
+>
+> 即从0~i的这子数组所能构成的在当前位置的最大和值。
+>
+> 而从代码上，类似于一种推动的效果，如果前边的值能让当前的位置的值更大，将将前边的值推送到当前位置并进行累加。
+
+### （2）56——合并区间
+
+**个人题解**：
+
+```go
+func merge(intervals [][]int) [][]int {
+	if len(intervals) == 0 {
+		return [][]int{}
+	}
+	// Sort intervals by start time
+	sort.Slice(intervals, func(i, j int) bool { return intervals[i][0] < intervals[j][0] })
+
+	merged := [][]int{intervals[0]}
+	for i := 1; i < len(intervals); i++ {
+		last := merged[len(merged)-1]
+		curr := intervals[i]
+		if curr[0] <= last[1] {
+			// Overlapping intervals, merge them
+			if curr[1] > last[1] {
+				merged[len(merged)-1][1] = curr[1]
+			}
+		} else {
+			// No overlap, add to result
+			merged = append(merged, curr)
+		}
+	}
+	return merged
+}
+```
+
+> 核心思路
+>
+> 将当前的区间，按照区间开始位置升序排序；
+>
+> 构建一个merge切片，比较新加入的区间与前者区间的结束位置。检查是否存在重叠区域。再决定是否要将新的区间与原始的区间进行合并。
